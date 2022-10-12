@@ -17,3 +17,9 @@ Scenario: Multiply two numbers
 	And the second number m is 3
 	When the two numbers are multiplied
 	Then the result m should be 6
+
+Scenario: test for string
+	Given the first string is a string 'asdf'
+	And the second string is 'ghij'
+	When the two numbers are added
+	Then the result should be 0
