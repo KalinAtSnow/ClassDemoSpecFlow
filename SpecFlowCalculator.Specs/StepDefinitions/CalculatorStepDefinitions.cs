@@ -1,4 +1,6 @@
 using FluentAssertions;
+using Newtonsoft.Json.Linq;
+using System.Security.Policy;
 using TechTalk.SpecFlow;
 
 namespace SpecFlowCalculator.Specs.StepDefinitions
@@ -10,10 +12,7 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
         // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
         private readonly Calculator _calculator = new Calculator();
         private int _result;
-        private int _resultm;
 
-
-        //any number added is good
         [Given("the first number is (.*)")]
         public void GivenTheFirstNumberIs(int number)
         {
@@ -38,35 +37,29 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
             _result.Should().Be(result);
         }
 
-
-
-        //any number multiplied is good
-        [Given("the first number m is (.*)")]
-        public void GivenTheFirstNumbermIs(int number)
+        [When(@"the two numbers are divided")]
+        public void WhenTheTwoNumbersAreDivided()
         {
-            _calculator.FirstNumber = number;
-        }
-
-        [Given("the second number m is (.*)")]
-        public void GivenTheSecondNumbermIs(int number)
-        {
-            _calculator.SecondNumber = number;
+            _result = _calculator.Divide();
         }
 
         [When("the two numbers are multiplied")]
         public void WhenTheTwoNumbersAreMultiplied()
         {
-            _resultm = _calculator.Multiply();
+            _result = _calculator.Multiply();
         }
 
         [Then("the result m should be (.*)")]
         public void ThenTheResultmShouldBe(int result)
         {
-            _resultm.Should().Be(result);
+            _result.Should().Be(result);
         }
 
-
-
+        [When(@"the two numbers are subtracted")]
+        public void WhenTheTwoNumbersAreSubtracted()
+        {
+            _result = _calculator.Subtract();
+        }
 
         //if strings are there, they convert to zero
         [Given(@"the first string is a string '([^']*)'")]
@@ -79,6 +72,38 @@ namespace SpecFlowCalculator.Specs.StepDefinitions
         public void GivenTheSecondStringIs(string ghij)
         {
             _calculator.SecondNumber = 0;
+        }
+
+        [Given(@"the operation \+ is done with (.*)")]
+        public void GivenTheOperationIsDoneWith(int value)
+        {
+            _calculator.SecondNumber = value;
+            _result = _calculator.Add();
+            _calculator.FirstNumber = _result;
+        }
+
+        [Given(@"the operation - is done with (.*)")]
+        public void WhenTheOperation_IsDoneWith(int value)
+        { 
+            _calculator.SecondNumber = value;
+            _result = _calculator.Subtract();
+            _calculator.FirstNumber = _result;
+        }
+
+        [Given(@"the operation \* is done with (.*)")]
+        public void WhenTheOperation__IsDoneWith(int value)
+        {
+            _calculator.SecondNumber = value;
+            _result = _calculator.Multiply();
+            _calculator.FirstNumber = _result;
+        }
+
+        [Given(@"the operation / is done with (.*)")]
+        public void GivenTheOperation___IsDoneWith(int value)
+        {
+            _calculator.SecondNumber = value;
+            _result = _calculator.Divide();
+            _calculator.FirstNumber = _result;
         }
     }
 }

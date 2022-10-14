@@ -4,7 +4,7 @@ Calculator asdf = new Calculator();
 
 Console.WriteLine("hello there, welcome to the calculator app");
 Console.WriteLine("type 1 to add and 2 to multiply");
-string input = Console.ReadLine();
+
 string first, second;
 int firstint = 0;
 int secondint = 0;
